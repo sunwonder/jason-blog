@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="themes/jason/header::header(null,null)"></div>
+<body>
+<div class="container index-page clearfix">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img th:src="@{/user/img/list_icon.png}"/>
+                    最新博客
+                </div>
+                <div class="datas">
+                    <ul>
+
+                        <li style="margin-bottom: 30px" th:each="article: ${articles.list}">
+                            <span class="date"><a
+                                    href="${pageContext.request.contextPath}/blog/articles/${blog.id}.html"></a></span>
+                            <span class="title"><a th:href="${commons.permalink(article)}"
+                                                   th:text="${article.title}"></a></span>
+                            <span class="summary">摘要:<span th:text="${article.tags}"></span>...</span>
+                            <span class="img">
+                                                <img src=""
+                                                     th:attr="src=@{${commons.show_thumb(article)}},title=#{logo},alt=#{logo}"/>
+				  	                        </span>
+                            <span class="info">发表于
+                                                 <time class="comment-time"
+                                                       th:text="${commons.fmtdate(article.created)}"></time>
+                                                阅读(<a th:text="${article.hits}"></a>)
+                                                评论(<a th:utext="${article.commentsNum}"></a>)
+                                            </span>
+                            <hr style="height:5px;border:none;border-top:1px dashed gray;padding-bottom:  10px;"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="lists-navigator clearfix">
+                <div th:replace="comm/macros::pageNav(${articles},'←','→','page')"></div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img th:src="@{/user/img/user_icon.png}"/>
+                    博主信息
+                </div>
+                <div class="user_image">
+                    <img src="http://www.iteye.com/upload/logo/user/838153/cd6cecc9-8cf0-3bf7-8555-41ed9f43239a.jpeg"/>
+                </div>
+                <div class="nickName">sunwonder</div>
+                <div class="userSign">(胸无城府人如玉，腹有诗书气自华)</div>
+            </div>
+
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img th:src="@{/user/img/byType_icon.png}"/>
+
+                    按日志类别
+                </div>
+                <div class="datas">
+                    <ul>
+                        <li style="margin-bottom: 5px" th:each="categorie: ${categories}">
+                                <span>
+                                    <a th:href="${commons.categoryLink(categorie.name)}"
+                                       th:text="${categorie.name}"></a>     (  <a th:text="${categorie.count}"></a>)
+                                   </span>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="data_list">
+                <div class="data_list_title">
+                    <img th:src="@{/user/img/byDate_icon.png}"/>
+                    按日志日期
+                </div>
+                <div class="datas">
+                    <ul>
+                        <c:forEach var="blogCount" items="${blogCountList }">
+                            <li><span><a
+                                    href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr }">${blogCount.releaseDateStr }(${blogCount.blogCount })</a></span>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+
+            <!--<div class="data_list">-->
+            <!--<div class="data_list_title">-->
+            <!--<img th:src="@{/user/img/link_icon.png}" />-->
+            <!--友情链接-->
+            <!--</div>-->
+            <!--<div class="datas">-->
+            <!--<ul>-->
+            <!--<c:forEach var="link" items="${linkList }">-->
+            <!--<li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>-->
+            <!--</c:forEach>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+
+        </div>
+
+    </div>
+</div>
+
+
+
+</body>
+<div th:replace="themes/jason/footer::footer"></div>
+</html>
